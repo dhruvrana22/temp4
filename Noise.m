@@ -1,0 +1,17 @@
+filename='input.wav';
+[y,Fs]=audioread(filename);
+sig1=y(:,1);
+sig2=y(:,2);
+[imf1,res1,info1]=vmd(sig1);
+[imf2,res2,info2]=vmd(sig2);
+[coeff1,score1,~,~,explained1,mu1]=pca(imf1);
+[coeff2,score2,~,~,explained2,mu2]=pca(imf2);
+fcolumn=score1(:,1);
+scolumn=score1(:,2);
+sum1=fcolumn+scolumn;
+fcolumn=score2(:,1);
+scolumn=score2(:,2);
+sum2=fcolumn+scolumn;
+A=[sum1(:),sum2(:)];
+A=A*5;
+audiowrite('output.wav',A,Fs);
